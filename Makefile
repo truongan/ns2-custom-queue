@@ -39,7 +39,7 @@ LINK	= $(CPP)
 LINK_SHLIB = gcc -shared
 MKDEP	= ./conf/mkdep
 TCLSH	= /usr/bin/tclsh8.5
-TCL2C	= ../tclcl-1.20/tcl2c++
+TCL2C	= /usr/bin/tcl2c++
 AR	= ar rc $(BLANK)
 
 RANLIB	= ranlib
@@ -53,18 +53,18 @@ PERL	= /usr/bin/perl
 # for diffusion
 #DIFF_INCLUDES = "./diffusion3/main ./diffusion3/lib ./diffusion3/nr ./diffusion3/ns"
 
-CCOPT	= -g -Wall -Wno-write-strings -Wno-parentheses 
+CCOPT	=  -Wall -Wno-write-strings 
 STATIC	= 
 #LDFLAGS	= $(STATIC)
 LDFLAGS	=  -Wl,-export-dynamic 
 LDOUT	= -o $(BLANK)
 
-DEFINE	= -DTCP_DELAY_BIND_ALL -DNO_TK -DTCLCL_CLASSINSTVAR  -fsigned-char -fno-inline -DLINUX_TCP_HEADER -DUSE_SHM -DHAVE_LIBTCLCL -DHAVE_TCLCL_H -DHAVE_LIBOTCL1_14 -DHAVE_OTCL_H -DHAVE_LIBTK8_5 -DHAVE_TK_H -DHAVE_LIBTCL8_5 -DHAVE_TCLINT_H -DHAVE_TCL_H  -DHAVE_CONFIG_H -DNS_DIFFUSION -DSMAC_NO_SYNC -DCPP_NAMESPACE=std -DUSE_SINGLE_ADDRESS_SPACE -Drng_test
+DEFINE	= -DTCP_DELAY_BIND_ALL -DNO_TK -DTCLCL_CLASSINSTVAR  -DNDEBUG -DLINUX_TCP_HEADER -DUSE_SHM -DHAVE_LIBTCLCL -DHAVE_TCLCL_H -DHAVE_LIBOTCL1_14 -DHAVE_OTCL_H -DHAVE_LIBTK8_5 -DHAVE_TK_H -DHAVE_LIBTCL8_5 -DHAVE_TCLINT_H -DHAVE_TCL_H  -DHAVE_CONFIG_H -DNS_DIFFUSION -DSMAC_NO_SYNC -DCPP_NAMESPACE=std -DUSE_SINGLE_ADDRESS_SPACE -Drng_test
 
 INCLUDES = \
 	-I.  \
 	-I. \
-	-I/home/pntruongan/source/tclcl-1.20 -I/home/pntruongan/source/otcl-1.14 -I/usr/include -I/usr/include -I/usr/include -I/usr/include/pcap \
+	-I/usr/include -I/usr/include -I/usr/include -I/usr/include -I/usr/include -I/usr/include/pcap \
 	-I./tcp -I./sctp -I./common -I./link -I./queue \
 	-I./adc -I./apps -I./mac -I./mobile -I./trace \
 	-I./routing -I./tools -I./classifier -I./mcast \
@@ -76,7 +76,7 @@ INCLUDES = \
 
 
 LIB	= \
-	-L/home/pntruongan/source/tclcl-1.20 -ltclcl -L/home/pntruongan/source/otcl-1.14 -lotcl -L/usr/lib64 -ltk8.5 -L/usr/lib64 -ltcl8.5 \
+	-L/usr/lib -ltclcl -L/usr/lib -lotcl -L/usr/lib64 -ltk8.5 -L/usr/lib64 -ltcl8.5 \
 	-lXext -lX11 \
 	 -lnsl -lpcap -ldl \
 	-lm -lm 

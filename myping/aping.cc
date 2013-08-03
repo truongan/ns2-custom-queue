@@ -35,24 +35,23 @@ APingAgent::APingAgent() : Agent(PT_APING)
 
 int APingAgent::command(int argc, const char*const* argv)
 {
-  if (argc == 2) {
-	if (strcmp(argv[1], "send") == 0) {
-		perror("ping\n");
-	  // Create a new packet
-	  Packet* pkt = allocpkt();
-	  // Access the Ping header for the new packet:
-	  hdr_ping* hdr = hdr_ping::access(pkt);
-	  // Set the 'ret' field to 0, so the receiving node knows
-	  // that it has to generate an echo packet
-	  hdr->ret = 0;
-	  // Store the current time in the 'send_time' field
-	  hdr->send_time = Scheduler::instance().clock();
-	  // Send the packet
-	  send(pkt, 0);
-	  // return TCL_OK, so the calling function knows that the
-	  // command has been processed
-	  return (TCL_OK);
-	}
+	if (argc == 2) {
+		if (strcmp(argv[1], "send") == 0) {
+			// Create a new packet
+			Packet* pkt = allocpkt();
+			// Access the Ping header for the new packet:
+			hdr_ping* hdr = hdr_ping::access(pkt);
+			// Set the 'ret' field to 0, so the receiving node knows
+			// that it has to generate an echo packet
+			hdr->ret = 0;
+			// Store the current time in the 'send_time' field
+			hdr->send_time = Scheduler::instance().clock();
+			// Send the packet
+			send(pkt, 0);
+			// return TCL_OK, so the calling function knows that the
+			// command has been processed
+			return (TCL_OK);
+		}
   }
 	
   // If the command hasn't been processed by APingAgent()::command,
@@ -63,7 +62,6 @@ int APingAgent::command(int argc, const char*const* argv)
 
 void APingAgent::recv(Packet* pkt, Handler*)
 {
-	perror("pong");
   // Access the IP header for the received packet:
   hdr_ip* hdrip = hdr_ip::access(pkt);
   // Access the Ping header for the received packet:
@@ -79,7 +77,7 @@ void APingAgent::recv(Packet* pkt, Handler*)
 	// Access the Ping header for the new packet:
 	hdr_ping* hdrret = hdr_ping::access(pktret);
 	// Set the 'ret' field to 1, so the receiver won't send another echo
-	hdrret->ret = 1;
+	hdrret->ret = 0;
 	// Set the send_time field to the correct value
 	hdrret->send_time = stime;
 	// Send the packet
