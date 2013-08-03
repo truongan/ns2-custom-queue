@@ -821,7 +821,7 @@ configure:7963: $? = 0
 configure:7963: result: yes
 configure:7963: checking for fesetprecision
 configure:7963: gcc -o conftest -g -O2   conftest.c -lm  >&5
-/tmp/ccW6Iyt5.o: In function `main':
+/tmp/ccCuM0ms.o: In function `main':
 /home/pntruongan/workspace/ns2-custom-queue//conftest.c:83: undefined reference to `fesetprecision'
 collect2: error: ld returned 1 exit status
 configure:7963: $? = 1
@@ -1886,7 +1886,7 @@ configure:8901: $? = 0
 configure:8905: result: found
 configure:8919: checking for addr2ascii
 configure:8919: gcc -o conftest -g -O2   -Wl,-export-dynamic conftest.c -lm  >&5
-/tmp/ccJmPNUs.o: In function `main':
+/tmp/ccRKc4pw.o: In function `main':
 /home/pntruongan/workspace/ns2-custom-queue//conftest.c:94: undefined reference to `addr2ascii'
 collect2: error: ld returned 1 exit status
 configure:8919: $? = 1
