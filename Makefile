@@ -63,6 +63,7 @@ DEFINE	= -DTCP_DELAY_BIND_ALL -DNO_TK -DTCLCL_CLASSINSTVAR  -DNDEBUG -DLINUX_TCP
 
 INCLUDES = \
 	-I.  \
+	-I./drop-swd-queue \
 	-I. \
 	-I/usr/include -I/usr/include -I/usr/include -I/usr/include -I/usr/include -I/usr/include/pcap \
 	-I./tcp -I./sctp -I./common -I./link -I./queue \
@@ -165,6 +166,7 @@ OBJ_CC = \
 	tools/random.o tools/rng.o tools/ranvar.o common/misc.o common/timer-handler.o \
 	common/scheduler.o common/object.o common/packet.o \
 	myping/aping.o \
+	drop-swd-queue/dropswd.o \
 	common/ip.o routing/route.o common/connector.o common/ttl.o \
 	trace/trace.o trace/trace-ip.o \
 	classifier/classifier.o classifier/classifier-addr.o \

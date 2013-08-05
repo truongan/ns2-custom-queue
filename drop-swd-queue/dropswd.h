@@ -7,75 +7,39 @@
 #ifndef dropswd_h
 #define dropswd_h
 
-#include <string.h>
-#include "queue.h"
-#include "config.h"
+#include "drop-tail.h"
 
-#define maxFlows 2000
-
-#define FIRST_ESTIMATE 1
-#define LOG_INTERVAL 1
-
-
-// We use this datastructure to keep track of a flow's RTT when using
-// IDMaps. This does not mean that GREEN keeps per-flow state information
-// This is merely a convenience for simulations.
-// We also use this as an easy way to estimate the number of active flows.
-// An alternative method would count the number of unique flows seen in the
-// log interval to estimate N.
-struct flowState
-{
-	double rtt_actual_;
-	int flowid_ ;
-	bool active_ ;
+class time_packet : public Packet{
+  public:
+	double received_time;
+	Packet *according_packet;
 };
 
-class DropSwd : public Queue {
+
+/*
+ * A bounded, drop-tail queue
+ */
+class DropSwd : public DropTail {
   public:
-	DropSwd();
-	~DropSwd();
+	DropSwd(): DropTail(){
+		Occ_other_udp = Occ_tcp = Occ_voip = 0;
+		time_queue = new PacketQueue;
+	}
+
   protected:
-	//int ctr; // debugging counter
-	int qsamp;
-	int qsum;
 
-	int command(int argc, const char*const* argv);
 	void enque(Packet*);
-	Packet* deque();
-	PacketQueue *q_;	/* underlying FIFO queue */
 
-	int greenArrivals_;
-	int greenAllDrops_;
-	int greenEarlyDrops_;
-	int greenForcedDrops_;
-	int greenDepartures_;
+	PacketQueue *time_queue;	/* FIFO queue of time packet */
+  private:
+	int Occ_tcp, Occ_voip, Occ_other_udp;
+	bool is_tcp(Packet* p);
+	bool is_other_udp(Packet* p);
+	bool is_voip(Packet* p);
 
-
-	double factor; //gamma parameter
-	double util_estimate; // fraction of bw used in given interval
-	double loss_estimate; // fraction of packets lost in given interval
-
-	double Kbytes_sent;
-	double queue_drops; // packets dropped by queue overflowing, in interval
-	double green_drops;  // packets dropped by green, in interval
-
-	double next_estimate_;
-	int N_estimate_;
-	int active_flows_;
-	int idmaps_;
-	double bw_; /*bandwidth of outgoing link to which this queue is attached in bps*/
-	double delay_; /*The propogation delay of outgoing link*/
-	int mss_; /*max segment size of packet*/
-	double c_; /*constant used in probablity equation*/
-
-	struct flowState flowTable[maxFlows];
-	int processPkt(Packet* p);
+	bool is_invalid(Packet *p);
+	void accept_packet(Packet* p); /*enque packet and update counter*/
+	void remove_packet(Packet* p); /*drop packet and update counter (just drop, don't remove from queue */
 };
 
 #endif
-
-
-
-
-
-

@@ -112,17 +112,17 @@ void DropTail::shrink_queue()
 		printf("shrink-queue: time %5.2f qlen %d, qlim %d\n",
  			Scheduler::instance().clock(),
 			q_->length(), qlim_);
-        while ((!qib_ && q_->length() > qlim_) || 
-            (qib_ && q_->byteLength() > qlimBytes)) {
-                if (drop_front_) { /* remove from head of queue */
-                        Packet *pp = q_->deque();
-                        drop(pp);
-                } else {
-                        Packet *pp = q_->tail();
-                        q_->remove(pp);
-                        drop(pp);
-                }
-        }
+	while ((!qib_ && q_->length() > qlim_) ||
+		(qib_ && q_->byteLength() > qlimBytes)) {
+			if (drop_front_) { /* remove from head of queue */
+					Packet *pp = q_->deque();
+					drop(pp);
+			} else {
+					Packet *pp = q_->tail();
+					q_->remove(pp);
+					drop(pp);
+			}
+	}
 }
 
 Packet* DropTail::deque()
