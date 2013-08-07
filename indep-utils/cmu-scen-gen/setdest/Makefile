@@ -54,7 +54,7 @@ MKDEP	= ../../../conf/mkdep
 
 # when including files from ns, we need to take care STL_NAMESPACE
 DEFINE = -Dstand_alone -DSTL_NAMESPACE=@STL_NAMESPACE@ -DCPP_NAMESPACE=std
-CFLAGS =  -Wall -Wno-write-strings 
+CFLAGS = -g -Wall -Wno-write-strings -Wno-parentheses 
 LDFLAGS = 
 LIBS =  -lnsl -lpcap -ldl -lm -lm 
 INSTALL = /usr/bin/install -c

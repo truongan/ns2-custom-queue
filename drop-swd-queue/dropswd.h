@@ -24,6 +24,10 @@ class DropSwd : public DropTail {
 	DropSwd(): DropTail(){
 		Occ_other_udp = Occ_tcp = Occ_voip = 0;
 		time_queue = new PacketQueue;
+		bind_bool("drop_front_", &drop_front_);
+		bind_bool("summarystats_", &summarystats);
+		bind_bool("queue_in_bytes_", &qib_);  // boolean: q in bytes?
+		bind("mean_pktsize_", &mean_pktsize_);
 	}
 
   protected:

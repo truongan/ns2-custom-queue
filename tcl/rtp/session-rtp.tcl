@@ -122,21 +122,22 @@ Session/RTP instproc rtcp_timeout {} {
 	}
 }
 
-Session/RTP instproc join-group { g } {
-	set g [expr $g]
+Session/RTP instproc join-group { g } {  
+     set g [expr $g]  
 
-	$self set group_ $g
+     $self set group_ $g  
 
-	mvar node_ dchan_ cchan_ 
+     mvar node_ dchan_ cchan_   
 
-	$dchan_ set dst_ $g
-	$node_ join-group $dchan_ $g
+     $dchan_ set dst_addr_ $g  
+     $node_ join-group $dchan_ $g  
 
-	incr g
+     incr g  
 
-	$cchan_ set dst_ $g
-	$node_ join-group $cchan_ $g
-}
+     $cchan_ set dst_addr $g  
+     $node_ join-group $cchan_ $g  
+
+}  
 
 Session/RTP instproc leave-group { } {
 	mvar group_ node_ cchan_ dchan_
